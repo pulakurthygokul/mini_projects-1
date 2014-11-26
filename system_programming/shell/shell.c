@@ -1,4 +1,10 @@
-/** @file shell.c */
+/* 
+A basic shell that runs within a shell.
+Features:
+* logging and searching
+* runs standard shell executables using fork 
+* timing of tasks with -t flag
+*/
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
