@@ -1,10 +1,10 @@
 import pytc
 
 class Person:
-    def __init__(self, name, internalId=None, anonId=None):
+    def __init__(self, name, internalId=None, anonIds=None):
         self.name = name
         self.internalId = internalId
-        self.anonId = []
+        self.anonIds = []
 
 def exceptionHandle(e):
     if type(e)==KeyError:
@@ -21,7 +21,7 @@ def buildPerson(db, key, person):
     
     if value[0] == 'n':
         newKey = value[1:]
-        person.anonId.append(newKey)
+        person.anonIds.append(newKey)
         return buildPerson(db, newKey, person)
 
     elif value[0] == 'i':
