@@ -1,5 +1,4 @@
 import pytc
-import struct
 
 class Person:
     def __init__(self, name, internalId=None, anonId=None):
@@ -9,9 +8,9 @@ class Person:
 
 def exceptionHandle(e):
     if type(e)==KeyError:
-        print 'Identity not found'
+        print 'Exception: Identity not found'
     else:
-        print 'Unknown exception searching for identity'
+        print 'Exception: Unknown exception searching for identity'
 
 def buildPerson(db, key, person):
     try:
@@ -46,11 +45,11 @@ def prompt():
     identity = raw_input("Identity to be resolved: ")
     return fname, identity
 
-
 if __name__ == "__main__":
     #fname = 'people.db'
     #name = 'foo'
     fname, name = prompt()
     db = pytc.BDB(fname, pytc.BDBOREADER)
     p = buildPerson(db, name, Person(name))
-    print convertToUnicode(p.internalId)
+    if(p.internalId):
+        print convertToUnicode(p.internalId)
