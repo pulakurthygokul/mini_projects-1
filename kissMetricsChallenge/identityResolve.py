@@ -10,9 +10,9 @@ class Person:
 
 def exceptionHandle(e):
     if type(e)==KeyError:
-        print 'Exception: Identity not found'
+        print '\nException: Identity not found\n'
     else:
-        print 'Exception: Unknown exception searching for identity'
+        print '\nException: Unknown exception searching for identity\n'
 
 def buildPerson(db, key, person):
     try:
@@ -31,7 +31,7 @@ def buildPerson(db, key, person):
         return person
 
     else:
-        print 'Found an identifier value starting with neither \"n\" nor \"i\"'
+        print 'Found an identifier value starting with neither \"n\" nor \"i\"\n'
         return person
 
 def convertToUnicode(string):
@@ -43,20 +43,24 @@ def convertUnicodeManual(string):
     s = []
     for char in string: 
         unicodeString = str((ord(char)))
+        print ord(char)
         reverse = unicodeString 
         s[:0] = reverse 
     return ('').join(s) 
 
-def prompt():
-    fname = raw_input("Database file path: ")
-    identity = raw_input("Identity to be resolved: ")
-    return fname, identity
+def outputResults(p):
+    print "\nName: " + p.name
+    print "Anonymous identifiers: " + str(p.anonIds)
+    print "Raw unisigned 32 bit little endian internal identifier: " + repr(p.internalId)
+    print "Base 10 value: " + str(convertToUnicode(p.internalId)) + "\n"
 
 if __name__ == "__main__":
-    #fname, name = prompt()
-    fname = 'people.db'
-    name = 'foo'
+    fname = raw_input("Database file path: ")
     db = pytc.BDB(fname, pytc.BDBOREADER)
-    p = buildPerson(db, name, Person(name))
-    if(p.internalId):
-        print convertToUnicode(p.internalId)
+    while(1):
+        name = raw_input("Identity to be resolved (type \'exit()\' to exit): ")
+        if name=='exit()':
+            break
+        p = buildPerson(db, name, Person(name))
+        if(p.internalId):
+            outputResults(p)

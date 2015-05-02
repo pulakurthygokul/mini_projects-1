@@ -11,6 +11,9 @@ class TestDDB(unittest.TestCase):
             firstValue = (db[key])[1:]
             return (firstValue in person.anonIds) or (firstValue == person.internalId)
 
+    def testLittleEndianConversion(self):
+        self.assertEquals(int(0x0d0c0b0a), convertToUnicode('\x0a\x0b\x0c\x0d'))
+
     def testFooAnonId(self):
         key = 'foo'
         db = pytc.BDB(DBNAME, pytc.BDBOREADER)
@@ -27,7 +30,7 @@ class TestDDB(unittest.TestCase):
         while num<10:
             randomKey = random.choice(keys)
             p = buildPerson(db, randomKey, Person(randomKey))
-            testResult = self.checkFirstVal(p,db,key)
+            testResult = self.checkFirstVal(p,db,randomKey)
             self.assertEquals(True, testResult)
             num+=1
 
