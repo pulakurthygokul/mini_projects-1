@@ -1,4 +1,6 @@
 import pytc
+import struct
+import numpy as np
 
 class Person:
     def __init__(self, name, internalId=None, anonIds=None):
@@ -33,10 +35,15 @@ def buildPerson(db, key, person):
         return person
 
 def convertToUnicode(string):
+    #same result as: return np.fromstring(string, dtype=np.uint32)
+    structReturnTuple = struct.unpack('<I', string)
+    return structReturnTuple[0]
+
+def convertUnicodeManual(string):
     s = []
     for char in string: 
         unicodeString = str((ord(char)))
-        reverse = unicodeString[::-1] 
+        reverse = unicodeString 
         s[:0] = reverse 
     return ('').join(s) 
 
@@ -46,9 +53,9 @@ def prompt():
     return fname, identity
 
 if __name__ == "__main__":
-    #fname = 'people.db'
-    #name = 'foo'
-    fname, name = prompt()
+    #fname, name = prompt()
+    fname = 'people.db'
+    name = 'foo'
     db = pytc.BDB(fname, pytc.BDBOREADER)
     p = buildPerson(db, name, Person(name))
     if(p.internalId):
