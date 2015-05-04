@@ -39,15 +39,6 @@ def convertToUnicode(string):
     structReturnTuple = struct.unpack('<I', string)
     return structReturnTuple[0]
 
-def convertUnicodeManual(string):
-    s = []
-    for char in string: 
-        unicodeString = str((ord(char)))
-        print ord(char)
-        reverse = unicodeString 
-        s[:0] = reverse 
-    return ('').join(s) 
-
 def outputResults(p):
     print "\nName: " + p.name
     print "Anonymous identifiers: " + str(p.anonIds)
